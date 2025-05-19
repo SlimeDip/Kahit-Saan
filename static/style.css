@@ -1,0 +1,146 @@
+body { 
+  font-family: Arial, sans-serif; 
+  background: #f8f9fa; 
+  margin: 0; 
+  padding: 0; 
+}
+
+.container { 
+  max-width: 500px; 
+  margin: 40px auto; 
+  background: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 8px #0001; 
+  padding: 32px; 
+}
+
+h2 { 
+  text-align: center; 
+  color: #333; 
+}
+
+label { 
+  display: block; 
+  margin-top: 16px; 
+  color: #555; 
+}
+
+input[type="text"] { 
+  width: 100%; 
+  padding: 8px; 
+  margin-top: 4px; 
+  border-radius: 4px; 
+  border: 1px solid #ccc; 
+}
+
+input[type="submit"], button { 
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #9fec9c;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;; 
+}
+
+button { 
+  background: #c9f2c4;
+  margin-left: 8px; 
+}
+
+input[type="submit"]:hover, button:hover { 
+  background-color: #23c483;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px); 
+}
+
+input[type="submit"]:active, button:active { 
+  transform: translateY(-1px); 
+}
+
+.loading-overlay {
+  display: none; 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh;
+  background: rgba(255,255,255,0.8); 
+  z-index: 9999; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 2em; 
+  color: #28a745; 
+}
+
+.restaurant-main { 
+  padding: 18px; 
+  border-radius: 6px; 
+  margin-bottom: 18px; 
+  text-align: center; 
+}
+
+.restaurant-main-bg { 
+  background: #e9f7ef; 
+  padding: 18px; 
+  border-radius: 6px; 
+  margin-bottom: 18px; 
+  text-align: center; 
+}
+
+.restaurant-list { 
+  list-style: none; 
+  padding: 0; 
+}
+
+.restaurant-list li { 
+  padding: 8px 0; 
+  border-bottom: 1px solid #eee; 
+}
+
+.restaurant-list li:last-child { 
+  border-bottom: none; 
+}
+
+.no-results { 
+  color: #c00; 
+  text-align: center; 
+  margin-top: 24px; 
+}
+
+.logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.submit-button:active {
+  transform: translateY(-1px);
+}
+
+.UserLocation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.Find {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.Selected {
+  padding: -4px 0;
+}
