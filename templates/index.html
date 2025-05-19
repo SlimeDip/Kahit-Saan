@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Nearby Restaurants Finder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=500, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="loading-overlay" id="loadingOverlay">Loading...</div>
+<div class="container">
+  <div class="logo">
+    <img src="{{ url_for('static', filename='KahitSaan.png') }}" alt="Logo" width="300">
+  </div>
+  <h2>Find Nearby Restaurants</h2>
+  <form method="post" id="locationForm" autocomplete="off" onsubmit="showLoading()">
+    <label>Latitude:</label>
+    <input type="text" name="lat" id="lat" required value="{{ latitude or '' }}">
+    <label>Longitude:</label>
+    <input type="text" name="lon" id="lon" required value="{{ longitude or '' }}">
+    <div class="UserLocation">
+      <button type="button" onclick="getLocation()">Use My Location</button>
+    </div>
+    <div class="Find">
+      <input type="submit" value="Find">
+    </div>
+  </form>
+
+  {% if selected_store %}
+    <div class ="restaurant-main">
+      <div class="restaurant-main-bg">
+        <h3>Selected Restaurant</h3>
+        <div style="font-size:1.3em;font-weight:bold;">{{ selected_store }}</div>
+      </div>
+    </div>
+    {% if restaurant_names|length > 1 %}
+      <h4>Other Nearby Restaurants:</h4>
+      <ul class="restaurant-list">
+        {% for name in restaurant_names if name != selected_store %}
+          <li>{{ name }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% elif latitude and longitude %}
+    <div class="no-results">No restaurants found nearby.</div>
+  {% endif %}
+</div>
+<script>
+  function getLocation() {
+    if (navigator.geolocation) {
+      showLoading();
+      navigator.geolocation.getCurrentPosition(function(position) {
+        document.getElementById('lat').value = position.coords.latitude;
+        document.getElementById('lon').value = position.coords.longitude;
+        hideLoading();
+      }, function(error) {
+        hideLoading();
+        alert('Unable to retrieve your location.');
+      });
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
+  }
+  function showLoading() {
+    document.getElementById('loadingOverlay').style.display = 'flex';
+  }
+  function hideLoading() {
+    document.getElementById('loadingOverlay').style.display = 'none';
+  }
+  window.onload = hideLoading;
+</script>
+</body>
+</html>
