@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: kahit-saan
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn Kahit_Saan:app
+    plan: free
