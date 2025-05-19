@@ -15,9 +15,9 @@
   <h2>Find Nearby Restaurants</h2>
   <form method="post" id="locationForm" autocomplete="off" onsubmit="showLoading()">
     <label>Latitude:</label>
-    <input type="text" name="lat" id="lat" required value="{{ latitude or '13.7847185' }}">
+    <input type="text" name="lat" id="lat" required value="{{ latitude or '' }}">
     <label>Longitude:</label>
-    <input type="text" name="lon" id="lon" required value="{{ longitude or '121.0745922' }}">
+    <input type="text" name="lon" id="lon" required value="{{ longitude or '' }}">
     <div class="UserLocation">
       <button type="button" onclick="getLocation()">Use My Location</button>
     </div>
