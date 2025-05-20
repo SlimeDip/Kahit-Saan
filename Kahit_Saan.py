@@ -43,7 +43,19 @@ def index():
                 ]
 
                 if restaurant_names:
-                    restaurant_name = random.choice(restaurant_names)
+                    selected_element = random.choice([
+                        element for element in stores
+                        if 'tags' in element and 'name' in element['tags']
+                    ])
+                    restaurant_name = selected_element['tags']['name']
+                    
+                    if 'lat' in selected_element and 'lon' in selected_element:
+                        slat = selected_element['lat']
+                        slon = selected_element['lon']
+                    elif 'center' in selected_element:
+                        slat = selected_element['center']['lat']
+                        slon = selected_element['center']['lon']
+
             except Exception as e:
                 print(f"Error fetching data: {e}")
 
@@ -52,7 +64,9 @@ def index():
         selected_store = restaurant_name,
         restaurant_names = restaurant_names,
         latitude = lat,
-        longitude = lon
+        longitude = lon,
+        selected_latitude = slat if 'slat' in locals() else None,
+        selected_longitude = slon if 'slon' in locals() else None
     )
 
 if __name__ == '__main__':
