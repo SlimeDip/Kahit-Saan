@@ -83,8 +83,8 @@ input[type="submit"]:active, button:active {
 .restaurant-main { 
   padding: 18px; 
   border-radius: 6px; 
-  margin-bottom: 18px; 
   text-align: center; 
+  padding-bottom: 0;
 }
 
 .restaurant-main-bg { 
@@ -141,6 +141,35 @@ input[type="submit"]:active, button:active {
   margin-top: 16px;
 }
 
-.Selected {
-  padding: -4px 0;
+.selected {
+  font-size: 2.5em;
+  font-weight: bold;
+  animation: popSelected 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  animation-delay: 0.5s;
+}
+
+@keyframes popSelected {
+  0% {
+    transform: scale(1);
+    color: #28a745;
+  }
+  30% {
+    transform: scale(1.2);
+    color: #23c483;
+  }
+  60% {
+    transform: scale(0.95);
+    color: #28a745;
+  }
+  100% {
+    transform: scale(1);
+    color: #28a745;
+  }
+}
+
+.find_location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }

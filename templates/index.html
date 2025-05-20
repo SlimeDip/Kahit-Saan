@@ -3,7 +3,7 @@
 <head>
   <title>Kahit Saan</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=500, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -15,9 +15,9 @@
   <h2>Find Nearby Restaurants</h2>
   <form method="post" id="locationForm" autocomplete="off" onsubmit="showLoading()">
     <label>Latitude:</label>
-    <input type="text" name="lat" id="lat" required value="{{ latitude or '' }}">
+    <input type="text" name="lat" id="lat" required value="{{ latitude or '' }}"> <!-- 13.7853438 -->
     <label>Longitude:</label>
-    <input type="text" name="lon" id="lon" required value="{{ longitude or '' }}">
+    <input type="text" name="lon" id="lon" required value="{{ longitude or '' }}"> <!-- 121.0746878 -->
     <div class="UserLocation">
       <button type="button" onclick="getLocation()">Use My Location</button>
     </div>
@@ -29,9 +29,12 @@
   {% if selected_store %}
     <div class ="restaurant-main">
       <div class="restaurant-main-bg">
-        <h3 style="margin-top: 0;">Selected Restaurant</h3>
-        <div style="font-size:1.5em;font-weight:bold;">{{ selected_store }}</div>
+        <h3 style="margin-top: 0;">Try eating at</h3>
+        <div class="selected">{{ selected_store }}</div>
       </div>
+    </div>
+    <div class="find_location">
+      <button class="find_location_button" onclick="openInGoogleMaps()">Find on maps</button>
     </div>
     {% if restaurant_names|length > 1 %}
       <h4>Other Nearby Restaurants:</h4>
@@ -68,6 +71,15 @@
     document.getElementById('loadingOverlay').style.display = 'none';
   }
   window.onload = hideLoading;
+  function openInGoogleMaps() {
+    var lat = "{{ selected_latitude }}";
+    var lon = "{{ selected_longitude }}";
+    if (lat && lon) {
+      window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lon}`, '_blank');
+    } else {
+      alert('Location not available.');
+    }
+  }
 </script>
 </body>
 </html>
