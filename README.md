@@ -15,31 +15,6 @@ Kahit Saan is a simple Flask web app to help you find nearby restaurants, cafes,
 - Shows a random nearby restaurant and a list of other options
 - Quick links to view the selected place on Google Maps
 
-## Getting Started
-
-### Prerequisites
-
-- Python 3.7+
-- pip
-
-### Installation
-
-1. **Clone the repository:**
-   ```sh
-   git clone https://github.com/yourusername/Kahit-Saan.git
-   cd Kahit-Saan
-   ```
-
-2. **Install dependencies:**
-   ```sh
-   pip install -r requirements.txt
-   ```
-
-3. **Run the app:**
-   ```sh
-   python Kahit_Saan.py
-   ```
-
 ## Usage
 
 - Enter your latitude and longitude, or click "Use My Location".
