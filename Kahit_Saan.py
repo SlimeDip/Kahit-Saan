@@ -13,13 +13,15 @@ def index():
     if request.method == 'POST':
         lat = request.form.get('lat')
         lon = request.form.get('lon')
+        delta = request.form.get('delta', '0.1')
 
         if lat and lon:
             try:
                 lat = float(lat)
                 lon = float(lon)
-                delta = 0.01
+                delta = float(delta) * 0.01
                 bbox = f"{lat - delta},{lon - delta},{lat + delta},{lon + delta}"
+                print(f"delta = {delta}")
 
                 query = f"""
                 [out:json];
@@ -71,3 +73,4 @@ def index():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
+    # app.run(debug=True)
