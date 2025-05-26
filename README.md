@@ -18,6 +18,6 @@ Kahit Saan is a simple Flask web app to help you find nearby restaurants, cafes,
 ## Usage
 
 - Enter your latitude and longitude, or click "Use My Location".
+- Adjust your search distance.
 - Click "Find" to get a random nearby restaurant.
 - Use the "Find on maps" button to open the location in Google Maps.
-- Use the "Open in Overpass" button to view the area in Overpass Turbo.
