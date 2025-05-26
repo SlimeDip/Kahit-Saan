@@ -173,3 +173,15 @@ input[type="submit"]:active, button:active {
   align-items: center;
   margin-bottom: 30px;
 }
+
+.slidernum {
+  margin-top: 3px;
+  position: absolute;
+  margin-left: 12px;
+}
+
+.note {
+  font-size: 0.9em;
+  color: #e92929;
+  margin-top: 8px;
+}
