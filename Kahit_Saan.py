@@ -13,7 +13,7 @@ def index():
     if request.method == 'POST':
         lat = request.form.get('lat')
         lon = request.form.get('lon')
-        delta = request.form.get('delta', '0.1')
+        delta = request.form.get('delta', '0.01')
 
         if lat and lon:
             try:
