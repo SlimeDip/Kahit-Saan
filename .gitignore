@@ -1,29 +1,39 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.egg-info/
 
 # Virtual environment
 venv/
 .env/
 .venv/
 
-# VS Code settings
+# IDE / Editor
 .vscode/
+.idea/
+*.swp
+*.swo
 
 # Environment variables
 .env
+.env.local
 
-# macOS
+# OS
 .DS_Store
-
-# Windows
 Thumbs.db
 
-# Python egg files
-*.egg-info/
+# Build artifacts
 dist/
 build/
 
 # Logs
 *.log
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
+
+# Personal
+Todo.txt

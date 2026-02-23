@@ -2,6 +2,6 @@ services:
   - type: web
     name: kahit-saan
     env: python
-    buildCommand: ""
+    buildCommand: "cd frontend && npm install && npm run build && cd .. && pip install -r requirements.txt"
     startCommand: gunicorn Kahit_Saan:app
     plan: free
