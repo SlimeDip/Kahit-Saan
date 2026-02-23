@@ -3,11 +3,7 @@ import requests
 import random
 import os
 
-app = Flask(
-    __name__,
-    static_folder=os.path.join('frontend', 'dist'),
-    static_url_path=''
-)
+app = Flask(__name__)
 
 @app.route('/api/search', methods=['POST'])
 def search():
@@ -105,4 +101,5 @@ def serve_react(path):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000, debug=True)
+    port = int(os.environ.get('PORT', '10000'))
+    app.run(host='0.0.0.0', port=port, debug=True)
