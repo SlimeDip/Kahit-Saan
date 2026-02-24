@@ -5,9 +5,24 @@ import os
 
 app = Flask(__name__)
 
+
+def _element_to_restaurant(el):
+    lat, lon = None, None
+    if 'lat' in el and 'lon' in el:
+        lat, lon = el['lat'], el['lon']
+    elif 'center' in el:
+        lat, lon = el['center']['lat'], el['center']['lon']
+    return {
+        'name': el['tags']['name'],
+        'lat': lat,
+        'lon': lon,
+        'amenity': el['tags'].get('amenity', ''),
+        'cuisine': el['tags'].get('cuisine', ''),
+    }
+
+
 @app.route('/api/search', methods=['POST'])
 def search():
-    """API endpoint for searching nearby restaurants."""
     data = request.get_json()
     lat = data.get('lat')
     lon = data.get('lon')
@@ -17,9 +32,7 @@ def search():
         return jsonify({'error': 'Latitude and longitude are required'}), 400
 
     try:
-        lat = float(lat)
-        lon = float(lon)
-        delta = float(delta) * 0.01
+        lat, lon, delta = float(lat), float(lon), float(delta) * 0.01
         bbox = f"{lat - delta},{lon - delta},{lat + delta},{lon + delta}"
 
         query = f"""
@@ -32,57 +45,21 @@ def search():
         out center;
         """
 
-        url = "http://overpass-api.de/api/interpreter"
-        response = requests.get(url, params={'data': query}, timeout=15)
-        api_data = response.json()
-
-        stores = api_data.get('elements', [])
-        named_stores = [
-            el for el in stores
+        response = requests.get(
+            "http://overpass-api.de/api/interpreter",
+            params={'data': query}, timeout=15,
+        )
+        elements = response.json().get('elements', [])
+        restaurants = [
+            _element_to_restaurant(el) for el in elements
             if 'tags' in el and 'name' in el['tags']
         ]
-
-        selected = None
-        if named_stores:
-            selected_element = random.choice(named_stores)
-            slat, slon = None, None
-            if 'lat' in selected_element and 'lon' in selected_element:
-                slat = selected_element['lat']
-                slon = selected_element['lon']
-            elif 'center' in selected_element:
-                slat = selected_element['center']['lat']
-                slon = selected_element['center']['lon']
-
-            selected = {
-                'name': selected_element['tags']['name'],
-                'lat': slat,
-                'lon': slon,
-                'amenity': selected_element['tags'].get('amenity', ''),
-                'cuisine': selected_element['tags'].get('cuisine', ''),
-            }
-
-        # Build full restaurant objects for client-side reroll
-        all_restaurants = []
-        for el in named_stores:
-            r_lat, r_lon = None, None
-            if 'lat' in el and 'lon' in el:
-                r_lat = el['lat']
-                r_lon = el['lon']
-            elif 'center' in el:
-                r_lat = el['center']['lat']
-                r_lon = el['center']['lon']
-            all_restaurants.append({
-                'name': el['tags']['name'],
-                'lat': r_lat,
-                'lon': r_lon,
-                'amenity': el['tags'].get('amenity', ''),
-                'cuisine': el['tags'].get('cuisine', ''),
-            })
+        selected = random.choice(restaurants) if restaurants else None
 
         return jsonify({
             'selected': selected,
-            'restaurants': all_restaurants,
-            'total': len(all_restaurants),
+            'restaurants': restaurants,
+            'total': len(restaurants),
         })
 
     except Exception as e:
@@ -93,7 +70,6 @@ def search():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react(path):
-    """Serve the React frontend."""
     dist_dir = os.path.join(app.root_path, 'frontend', 'dist')
     if path and os.path.exists(os.path.join(dist_dir, path)):
         return send_from_directory(dist_dir, path)

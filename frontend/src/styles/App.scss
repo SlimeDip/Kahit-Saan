@@ -21,7 +21,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 
-  // Clean white background — no pseudo-element overlays
 }
 
 #root {
@@ -44,14 +43,6 @@ body {
   text-align: center;
   margin-bottom: $spacing-xl;
   @include slide-up(0.7s);
-
-  &__logo {
-    width: 180px;
-    height: auto;
-    filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3));
-    margin-bottom: $spacing-md;
-    animation: float 3s ease-in-out infinite;
-  }
 
   &__title {
     font-family: $font-display;
