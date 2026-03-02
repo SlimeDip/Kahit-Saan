@@ -12,8 +12,10 @@ export default function ResultCard({ restaurant, onReroll, canReroll }: ResultCa
 
   const openInMaps = () => {
     if (restaurant.lat && restaurant.lon) {
+      // Combine name + coordinates for best accuracy - shows specific branch with proper label
+      const query = encodeURIComponent(`${restaurant.name} near ${restaurant.lat},${restaurant.lon}`);
       window.open(
-        `https://www.google.com/maps/search/?api=1&query=${restaurant.lat},${restaurant.lon}`,
+        `https://www.google.com/maps/search/?api=1&query=${query}`,
         '_blank'
       );
     } else {
