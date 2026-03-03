@@ -11,10 +11,12 @@ export default function App() {
   const [selected, setSelected] = useState<Restaurant | null>(null);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSearch = useCallback(async (lat: number, lon: number, delta: number) => {
     setLoading(true);
     setSearched(true);
+    setError(null);
     try {
       const data = await searchRestaurants({ lat, lon, delta });
       setResult(data);
@@ -23,6 +25,7 @@ export default function App() {
       console.error('Search error:', err);
       setResult(null);
       setSelected(null);
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -75,7 +78,18 @@ export default function App() {
         </>
       )}
 
-      {searched && !loading && !selected && (
+      {error && !loading && (
+        <div className="card">
+          <div className="fetch-error">
+            <div className="fetch-error__icon">⚠️</div>
+            <p className="fetch-error__title">Failed to fetch results</p>
+            <p className="fetch-error__title">Please try again.</p>
+            <p className="fetch-error__text">{error}</p>
+          </div>
+        </div>
+      )}
+
+      {searched && !loading && !selected && !error && (
         <div className="card">
           <div className="no-results">
             <div className="no-results__icon">🍽️</div>

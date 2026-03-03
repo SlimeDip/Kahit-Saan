@@ -19,6 +19,11 @@ export default function RestaurantList({ restaurants, total }: RestaurantListPro
     setSelectedRestaurant(null);
   };
 
+  const formatDistance = (meters: number): string => {
+    if (meters >= 1000) return `${(meters / 1000).toFixed(1)} km`;
+    return `${meters} m`;
+  };
+
   return (
     <>
       <div className="restaurant-list">
@@ -43,7 +48,12 @@ export default function RestaurantList({ restaurants, total }: RestaurantListPro
                 style={{ '--i': index } as React.CSSProperties}
                 onClick={() => handleRestaurantClick(r)}
               >
-                {r.name}
+                <span className="restaurant-list__item-name">{r.name}</span>
+                {r.distance !== null && (
+                  <span className="restaurant-list__item-distance">
+                    {formatDistance(r.distance)}
+                  </span>
+                )}
               </li>
             ))}
           </ul>

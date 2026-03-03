@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import type { Restaurant } from '../types';
 
 interface RestaurantModalProps {
@@ -45,7 +46,12 @@ export default function RestaurantModal({ restaurant, onClose }: RestaurantModal
     return labels[amenity] || amenity;
   };
 
-  return (
+  const formatDistance = (meters: number): string => {
+    if (meters >= 1000) return `${(meters / 1000).toFixed(1)} km`;
+    return `${meters} m`;
+  };
+
+  return createPortal(
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label="Close">
@@ -61,6 +67,9 @@ export default function RestaurantModal({ restaurant, onClose }: RestaurantModal
             {restaurant.cuisine && (
               <span className="modal-tag">{restaurant.cuisine}</span>
             )}
+            {restaurant.distance !== null && (
+              <span className="modal-tag modal-tag--distance">📍 {formatDistance(restaurant.distance)} away</span>
+            )}
           </div>
         </div>
 
@@ -69,6 +78,14 @@ export default function RestaurantModal({ restaurant, onClose }: RestaurantModal
             <h3 className="modal-section-title">Location</h3>
             {restaurant.lat && restaurant.lon ? (
               <div className="modal-location">
+                {restaurant.address && (
+                  <p className="modal-address">📍 {restaurant.address}</p>
+                )}
+                {restaurant.distance !== null && (
+                  <p className="modal-distance-info">
+                    {formatDistance(restaurant.distance)} from your location
+                  </p>
+                )}
                 <p className="modal-coordinates">
                   <span className="modal-coord-label">Coordinates:</span>
                   <br />
@@ -108,11 +125,7 @@ export default function RestaurantModal({ restaurant, onClose }: RestaurantModal
               <div className="modal-description-item">
                 <span>Perfect for dining out, grabbing a quick bite, or meeting friends</span>
               </div>
-              <div className="modal-description-item">
-                <span>Check current hours and availability before visiting</span>
-              </div>
             </div>
-            
           </div>
         </div>
 
@@ -133,6 +146,7 @@ export default function RestaurantModal({ restaurant, onClose }: RestaurantModal
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

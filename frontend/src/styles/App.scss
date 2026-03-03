@@ -134,7 +134,7 @@ body {
     width: 100%;
     height: 6px;
     border-radius: 3px;
-    background: linear-gradient(to right, $primary-dark, $primary-light);
+    background: linear-gradient(to right, $primary-lightest, $primary-light);
     outline: none;
 
     &::-webkit-slider-thumb {
@@ -361,6 +361,51 @@ body {
     animation: cardFlash 0.4s ease;
   }
 
+  &__tag--distance {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-color: rgba(59, 130, 246, 0.15);
+  }
+
+  &__details {
+    margin-top: $spacing-lg;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__detail-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-size: 0.85rem;
+    color: $text-secondary;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__detail-icon {
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+  }
+
+  &__detail-link {
+    color: $primary;
+    text-decoration: none;
+    font-weight: 500;
+    word-break: break-all;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   &__note {
     font-size: 0.8rem;
     color: $text-muted;
@@ -442,6 +487,9 @@ body {
   }
 
   &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 12px $spacing-md;
     border-bottom: 1px solid rgba(148, 163, 184, 0.08);
     color: $text-secondary;
@@ -461,11 +509,24 @@ body {
       padding-left: $spacing-lg;
     }
 
-    &::before {
-      content: '›';
-      margin-right: $spacing-sm;
-      color: $primary;
-      font-weight: 700;
+    &-name {
+      &::before {
+        content: '›';
+        margin-right: $spacing-sm;
+        color: $primary;
+        font-weight: 700;
+      }
+    }
+
+    &-distance {
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #3b82f6;
+      background: rgba(59, 130, 246, 0.08);
+      padding: 2px 8px;
+      border-radius: $radius-full;
+      margin-left: $spacing-sm;
     }
   }
 }
@@ -485,6 +546,30 @@ body {
   &__text {
     color: $text-muted;
     font-size: 1rem;
+  }
+}
+
+// ── Fetch Error ──
+.fetch-error {
+  text-align: center;
+  padding: $spacing-2xl $spacing-xl;
+  @include slide-up(0.5s);
+
+  &__icon {
+    font-size: 3rem;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #dc2626;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__text {
+    color: $text-muted;
+    font-size: 0.7rem;
   }
 }
 
@@ -535,7 +620,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -558,6 +643,7 @@ body {
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  z-index: 10001;
   animation: modalSlideIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -636,6 +722,12 @@ body {
   background: rgba($primary, 0.1);
   color: $primary-light;
   border: 1px solid rgba($primary, 0.15);
+
+  &--distance {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-color: rgba(59, 130, 246, 0.15);
+  }
 }
 
 .modal-body {
@@ -678,6 +770,19 @@ body {
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
+}
+
+.modal-address {
+  font-size: 0.9rem;
+  color: $text-secondary;
+  margin-bottom: $spacing-sm;
+}
+
+.modal-distance-info {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: $spacing-sm;
 }
 
 .modal-coordinates {

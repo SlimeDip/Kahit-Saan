@@ -42,6 +42,11 @@ export default function ResultCard({ restaurant, onReroll, canReroll }: ResultCa
     return labels[amenity] || amenity;
   };
 
+  const formatDistance = (meters: number): string => {
+    if (meters >= 1000) return `${(meters / 1000).toFixed(1)} km`;
+    return `${meters} m`;
+  };
+
   return (
     <div className="result">
       <div className={`result__card ${spinning ? 'result__card--spinning' : ''}`}>
@@ -54,6 +59,45 @@ export default function ResultCard({ restaurant, onReroll, canReroll }: ResultCa
           )}
           {restaurant.cuisine && (
             <span className="result__tag">{restaurant.cuisine}</span>
+          )}
+          {restaurant.distance !== null && (
+            <span className="result__tag result__tag--distance">
+              📍 {formatDistance(restaurant.distance)} away
+            </span>
+          )}
+        </div>
+
+        <div className="result__details">
+          {restaurant.address && (
+            <div className="result__detail-row">
+              <span className="result__detail-icon">📍</span>
+              <span>{restaurant.address}</span>
+            </div>
+          )}
+          {restaurant.phone && (
+            <div className="result__detail-row">
+              <span className="result__detail-icon">📞</span>
+              <a href={`tel:${restaurant.phone}`} className="result__detail-link">{restaurant.phone}</a>
+            </div>
+          )}
+          {restaurant.website && (
+            <div className="result__detail-row">
+              <span className="result__detail-icon">🌐</span>
+              <a
+                href={restaurant.website.startsWith('http') ? restaurant.website : `https://${restaurant.website}`}
+                target="_blank"
+                rel="noreferrer"
+                className="result__detail-link"
+              >
+                {restaurant.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+              </a>
+            </div>
+          )}
+          {restaurant.opening_hours && (
+            <div className="result__detail-row">
+              <span className="result__detail-icon">🕐</span>
+              <span>{restaurant.opening_hours}</span>
+            </div>
           )}
         </div>
 
