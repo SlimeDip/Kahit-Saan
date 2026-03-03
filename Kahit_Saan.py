@@ -8,8 +8,7 @@ app = Flask(__name__)
 
 
 def _haversine(lat1, lon1, lat2, lon2):
-    """Return distance in metres between two lat/lon points."""
-    R = 6_371_000  # Earth radius in metres
+    R = 6_371_000
     phi1, phi2 = math.radians(lat1), math.radians(lat2)
     d_phi = math.radians(lat2 - lat1)
     d_lambda = math.radians(lon2 - lon1)
@@ -27,7 +26,6 @@ def _element_to_restaurant(el, user_lat=None, user_lon=None):
 
     tags = el.get('tags', {})
 
-    # Build address from OSM addr:* tags
     addr_parts = []
     if tags.get('addr:housenumber'):
         addr_parts.append(tags['addr:housenumber'])
@@ -47,10 +45,6 @@ def _element_to_restaurant(el, user_lat=None, user_lon=None):
         'lon': lon,
         'amenity': tags.get('amenity', ''),
         'cuisine': tags.get('cuisine', ''),
-        'phone': tags.get('phone') or tags.get('contact:phone', ''),
-        'website': tags.get('website') or tags.get('contact:website', ''),
-        'opening_hours': tags.get('opening_hours', ''),
-        'address': address,
         'distance': distance,
     }
 
@@ -88,7 +82,7 @@ def search():
             _element_to_restaurant(el, lat, lon) for el in elements
             if 'tags' in el and 'name' in el['tags']
         ]
-        # Sort by distance (closest first), restaurants without coords last
+        
         restaurants.sort(key=lambda r: r['distance'] if r['distance'] is not None else float('inf'))
         selected = random.choice(restaurants) if restaurants else None
 
